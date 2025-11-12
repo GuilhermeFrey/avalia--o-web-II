@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes do funcionário</title>
+    <title>{{ operacao }} Funcionário</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
 </head>
@@ -37,23 +37,54 @@
             </div>
         </header>
 
-        <h1>Detalhes do Funcionário: {{ funcionario.nome }} {{ funcionario.sobrenome }}</h1>
 
-        <ul class="list-group">
-            <li class="list-group-item"><strong>ID:</strong> {{ funcionario.id }}</li>
-            <li class="list-group-item"><strong>Nome:</strong> {{ funcionario.nome }}</li>
-            <li class="list-group-item"><strong>Sobrenome:</strong> {{ funcionario.sobrenome }}</li>
-            <li class="list-group-item"><strong>CPF:</strong> {{ funcionario.cpf }}</li>
-            <li class="list-group-item"><strong>Tempo de Serviço:</strong> {{ funcionario.tempo_de_servico }} anos</li>
-            <li class="list-group-item"><strong>Remuneração:</strong> R$ {{ funcionario.remuneracao|floatformat:2 }}</li>
-        </ul>
-        
-        <div class="mt-4">
-            <a href="{% url 'website:editar' funcionario.id %}" class="btn btn-warning">Editar Funcionário</a>
-            <a href="{% url 'website:excluir' funcionario.id %}" class="btn btn-danger">Excluir Funcionário</a>
-            <a href="{% url 'website:listar' %}" class="btn btn-secondary">Voltar para a Lista</a>
-        </div>
+        <h1>{{ operacao }} Funcionário</h1>
 
+        <form method="POST" class="post-form">{% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.nome.id_for_label }}" class="form-label">Nome:</label>
+                    {{ form.nome }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.sobrenome.id_for_label }}" class="form-label">Sobrenome:</label>
+                    {{ form.sobrenome }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.cpf.id_for_label }}" class="form-label">CPF:</label>
+                    {{ form.cpf }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.tempo_de_servico.id_for_label }}" class="form-label">Tempo de Serviço (anos):</label>
+                    {{ form.tempo_de_servico }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.remuneracao.id_for_label }}" class="form-label">Remuneração:</label>
+                {{ form.remuneracao }}
+            </div>
+            
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Erro no formulário:</strong>
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary">{{ operacao }}</button>
+            <a href="{% url 'website:listar' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
 
     </div>
 
