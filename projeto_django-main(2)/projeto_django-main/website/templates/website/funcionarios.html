@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funcionários de {{ autor }}</title> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Funcionários de {{ autor }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
 </head>
 <body>
@@ -37,8 +38,11 @@
         </header>
 
 
-        <h1>Funcionários de {{ autor }}</h1> <div class="d-flex justify-content-end mb-3">
-            <a href="{% url 'website:cadastrar' %}" class="btn btn-success">Cadastrar Novo Funcionário</a> </div>
+        <h1>Funcionários de {{ autor }}</h1> 
+        
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{% url 'website:cadastrar' %}" class="btn btn-success">Cadastrar Novo Funcionário</a> 
+        </div>
 
 
         <table class="table table-striped">
@@ -51,7 +55,8 @@
                         Sobrenome
                     </th>
                     <th scope="col">
-                        Ações </th>
+                        Ações 
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -62,7 +67,7 @@
                     <td>
                         <a href="{% url 'website:detalhes' funcionario.id %}" class="btn btn-sm btn-info"> Ver  </a>
                         <a href="{% url 'website:editar' funcionario.id %}" class="btn btn-sm btn-warning"> Editar  </a>
-                        <a href="{% url 'website:excluir' funcionario.id %}" class="btn btn-sm btn-danger"> Excluir  </a>
+                        <a href="{% url 'website:excluir' funcionario.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir o funcionário {{ funcionario.nome }}?');"> Excluir  </a>
                 
                     </td>
                     
